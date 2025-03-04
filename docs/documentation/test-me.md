@@ -7,7 +7,7 @@ hidden: false
 
 ### Hello I'm a test page
 
-```Javascript
+```javascript
 // Program to countdown till 1
 
 // recursive function
