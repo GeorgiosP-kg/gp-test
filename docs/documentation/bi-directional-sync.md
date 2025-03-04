@@ -1,3 +1,10 @@
+---
+title: Bi-Directional Sync
+excerpt: >-
+  This page will help you get started with Bi-Directional sync
+hidden: false
+---
+
 <article class="rm-Article "><header id="content-head"><div class="row clearfix"><div class="col-xs-9"><h1>Bi-Directional Sync</h1></div></div></header><div class="grid-container-fluid" id="content-container"><section class="content-body grid-75"><div class="rm-Markdown markdown-body rm-Markdown markdown-body ng-non-bindable" data-testid="RDMD" style="margin-left: 31px;">
 
 <blockquote class="callout callout_info" theme="📘"><h3 class="callout-heading"><span class="callout-icon">📘</span><p>Beta Feature</p></h3><p>We're excited to announce that bi-directional sync is currently in beta and will be gradually available to our ReadMe customers! If you’d like to be among the first to try it out, feel free to join our waitlist in the app. We can’t wait to have you on board!</p></blockquote>
