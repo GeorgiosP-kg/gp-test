@@ -34,5 +34,6 @@ function counter(count) {
 // access function
 counter(5);
 
+# wow
 
 ```
