@@ -157,7 +157,6 @@ Create data and error events for your TCP socket connection. The data event will
 
 Build the transaction request object that you will send to your Moneris Go device.  
 
-
 # 4. Process a response from socket
 
 <!-- javascript@57,59,91-96 -->
@@ -166,10 +165,9 @@ The logic for processing a response from the socket will be in the data event th
 
 After you append the data to the buffer, checks are needed to ensure you have enough data in the buffer to process a response. You will initially check to see if there is enough data for the messageLength value, which indicates the size of the following response. If there is enough data, you will grab the value from the buffer.
 
-
 # 5. Handle the transaction message
 
-<!-- javascript@102-124 -->
+<!-- javascript@69-75,102-124 -->
 
 Check to see if the Moneris Go device is available. If the status value in the response is “Terminal busy”, the device is unavailable. You can close the connection.
 
@@ -179,4 +177,4 @@ Check to see if completed equals “false”. If that is the case, the transacti
 
 Check to see if completed equals “true”. If that is the case, then the transaction has finished. You can close the connection.
 
-Disconnect from the terminal based on the transaction status 
+Disconnect from the terminal based on the transaction status
