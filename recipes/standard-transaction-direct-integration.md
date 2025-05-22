@@ -135,14 +135,13 @@ const handleMessage = (transactionData, res) => {
 
 ```
 
-# 1. Initialize the purchase endpoint 
+# 1. Initialize the purchase endpoint
 
 <!-- javascript@13-15 -->
 
 Initialize the purchase endpoint, grab the totalAmount from the request body.
 
-
-# 2. Setup your socket connection 
+# 2. Setup your socket connection
 
 <!-- javascript@7,8,43-53,78,80-85 -->
 
@@ -150,4 +149,34 @@ Declare the DEVICE_IP and DEVICE_PORT for use and initialize the connection to t
 
 NOTE: Your requests need to be pre-fixed with two-bytes containing the message request length or the request will be rejected automatically. The responses you receive will also contain a pre-fix of two-bytes that contain the response message length.
 
-Create data and error events for your TCP socket connection. The data event will trigger every time a new payload is received. The error event will trigger if a network-level error occurs on the socket. 
+Create data and error events for your TCP socket connection. The data event will trigger every time a new payload is received. The error event will trigger if a network-level error occurs on the socket.
+
+# 3. Build and send transaction playload
+
+<!-- javascript@23-40 -->
+
+Build the transaction request object that you will send to your Moneris Go device.  
+
+
+# 4. Process a response from socket
+
+<!-- javascript@57,59,91-96 -->
+
+The logic for processing a response from the socket will be in the data event that was declared earlier. You first need to append the received payload to the buffer. 
+
+After you append the data to the buffer, checks are needed to ensure you have enough data in the buffer to process a response. You will initially check to see if there is enough data for the messageLength value, which indicates the size of the following response. If there is enough data, you will grab the value from the buffer.
+
+
+# 5. Handle the transaction message
+
+<!-- javascript@102-124 -->
+
+Check to see if the Moneris Go device is available. If the status value in the response is “Terminal busy”, the device is unavailable. You can close the connection.
+
+Check to see if there is an error in the response. If “errorDetails” exists within the object then an error has occurred during validation. You can close the connection.
+
+Check to see if completed equals “false”. If that is the case, the transaction is not fulfilled. You will receive additional messages from the terminal; do not close the connection.
+
+Check to see if completed equals “true”. If that is the case, then the transaction has finished. You can close the connection.
+
+Disconnect from the terminal based on the transaction status 
