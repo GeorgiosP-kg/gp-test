@@ -135,13 +135,13 @@ const handleMessage = (transactionData, res) => {
 
 ```
 
-# 1. Initialize the purchase endpoint
+# Initialize the purchase endpoint
 
 <!-- javascript@13-15 -->
 
 Initialize the purchase endpoint, grab the totalAmount from the request body.
 
-# 2. Setup your socket connection
+# Setup your socket connection
 
 <!-- javascript@7,8,43-53,78,80-85 -->
 
@@ -151,13 +151,13 @@ NOTE: Your requests need to be pre-fixed with two-bytes containing the message r
 
 Create data and error events for your TCP socket connection. The data event will trigger every time a new payload is received. The error event will trigger if a network-level error occurs on the socket.
 
-# 3. Build and send transaction playload
+# Build and send transaction playload
 
 <!-- javascript@23-40 -->
 
 Build the transaction request object that you will send to your Moneris Go device.  
 
-# 4. Process a response from socket
+# Process a response from socket
 
 <!-- javascript@57,59,91-96 -->
 
@@ -165,7 +165,7 @@ The logic for processing a response from the socket will be in the data event th
 
 After you append the data to the buffer, checks are needed to ensure you have enough data in the buffer to process a response. You will initially check to see if there is enough data for the messageLength value, which indicates the size of the following response. If there is enough data, you will grab the value from the buffer.
 
-# 5. Handle the transaction message
+# Handle the transaction message
 
 <!-- javascript@69-75,102-124 -->
 
