@@ -12,7 +12,7 @@ metadata:
 
 Initialize the purchase endpoint, grab the totalAmount from the request body.
 
-```
+```javascript
 app.post("/purchase", (req, res) => {
  //Grab totalAmount from the request body
  const { totalAmount } = req.body;
@@ -27,7 +27,7 @@ Declare the **DEVICE\_IP** and **DEVICE\_PORT** for use and initialize the conne
 
 **NOTE**: Your requests need to be prefixed with two-bytes containing the message request length, or the request will be rejected automatically. The responses you receive will also contain a prefix of two-bytes that contain the response message length.
 
-```
+```javascript
 const DEVICE_IP = "192.168.1.10"; //IP of your Device
 const DEVICE_PORT = 1080; // Default port
 
@@ -48,7 +48,7 @@ client.connect(DEVICE_PORT, DEVICE_IP, () => {
 
 Create **data** and **error** events for your TCP socket connection. The **data** event will trigger every time a new payload is received. The **error** event will trigger if a network-level error occurs on the socket.
 
-```
+```javascript
 client.on("data", () => {
 
 });
@@ -64,7 +64,7 @@ client.on("error", (error) => {
 
 Build the transaction request object that you will send to your Moneris Go device. The type of functionality that will be executed by your request is dependent on the "**action**" value that you send in the request. For a full list of all the possible fields for the request, visit the API spec at the **URL**.
 
-```
+```javascript
 const orderId = uuidv4();
  const idempotencyKey = uuidv4();
  const transactionPayload = {
@@ -93,7 +93,7 @@ const orderId = uuidv4();
 
 The logic for processing a response from the socket will be in the **data** event that was declared earlier. You first need to append the received payload to the **buffer**.
 
-```
+```javascript
 buffer = Buffer.concat([buffer, data]);
 ```
 
@@ -101,7 +101,7 @@ buffer = Buffer.concat([buffer, data]);
 
 After you append the data to the **buffer**, checks are needed to ensure you have enough data in the **buffer** to process a response. You will initially check to see if there is enough data for the **messageLength** value, which indicates the size of the following response. If there is enough data, you will grab the value from the **buffer**.
 
-```
+```javascript
 const getMessageLength = (buffer) => {
  if (buffer.length >= 2) {
    return buffer.readUInt16BE(0);
@@ -116,7 +116,7 @@ const messageLength = getMessageLength(buffer);
 
 After you have the **messageLength** you will perform another check to see if you have enough data in the **buffer** for the complete JSON response. If that is the case, you will grab the data from the **buffer** and convert it to JSON.
 
-```
+```javascript
 const readMessage = (buffer, messageLength) => {
  return JSON.parse(buffer.subarray(2, messageLength).toString());
 };
@@ -142,7 +142,7 @@ buffer = buffer.subarray(messageLength + 2);
 
 Check to see if the Moneris Go device is available. If the **status** value in the response is “**Terminal busy**”, the device is unavailable. You can close the connection.
 
-```
+```javascript
 if (transactionData.status === "Terminal busy") {
  //Handle Terminal busy error here
   
@@ -153,7 +153,7 @@ if (transactionData.status === "Terminal busy") {
 
 Check to see if there is an error in the response. If “**errorDetails**” exists within the object then an error has occurred during validation. You can close the connection.
 
-```
+```javascript
 if (transactionData.data.response[0].errorDetails) {
  //Handle transaction validation error here
   
@@ -164,7 +164,7 @@ if (transactionData.data.response[0].errorDetails) {
 
 Check to see if **completed** equals “**false**”. If that is the case, the transaction is not fulfilled. You will receive additional messages from the terminal; do not close the connection.
 
-```
+```javascript
 if (transactionData.data.response[0].completed === "false") {
  //Handle progress response here
 
@@ -176,7 +176,7 @@ if (transactionData.data.response[0].completed === "false") {
 
 Check to see if **completed** equals “**true**”. If that is the case, then the transaction has finished. Additionally check for **statusCode** of “**5207**” which indicates that the transaction was successful. You can close the connection.
 
-```
+```javascript
 if (transactionData.data.response[0].completed === "true") {
  if (transactionData.data.response[0].statusCode === "5207") {
    //Handle transaction completed case here
@@ -195,7 +195,7 @@ A number of additional **statusCodes** exist that need to be accounted for. For 
 
 Disconnect from the terminal based on the transaction status
 
-```
+```javascript
 if (disconnectResponse) {
      //transaction has concluded, exit the processData function
      client.destroy();
@@ -208,7 +208,7 @@ if (disconnectResponse) {
 
 Below is the full code example using Node and express listening on [http://localhost:3000](http://localhost:3000).
 
-```
+```javascript
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import net from "net";
