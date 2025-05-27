@@ -168,7 +168,6 @@ Check to see if **completed** equals “**false**”. If that is the case, the t
 if (transactionData.data.response[0].completed === "false") {
  //Handle progress response here
 
-
 }
 ```
 
