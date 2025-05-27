@@ -25,7 +25,7 @@ app.post("/purchase", (req, res) => {
 
 Declare the **DEVICE\_IP** and **DEVICE\_PORT** for use and initialize the connection to the Moneris Go device.
 
-\*\*NOTE: \*\*Your requests need to be prefixed with two-bytes containing the message request length, or the request will be rejected automatically. The responses you receive will also contain a prefix of two-bytes that contain the response message length.
+**NOTE**: Your requests need to be prefixed with two-bytes containing the message request length, or the request will be rejected automatically. The responses you receive will also contain a prefix of two-bytes that contain the response message length.
 
 ```
 const DEVICE_IP = "192.168.1.10"; //IP of your Device
