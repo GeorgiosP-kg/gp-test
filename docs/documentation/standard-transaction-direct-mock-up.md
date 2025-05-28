@@ -21,6 +21,10 @@ app.post("/purchase", (req, res) => {
 
 <br />
 
+***
+
+<br />
+
 ## 2. Setup Your Socket Connection
 
 Declare the **DEVICE\_IP** and **DEVICE\_PORT** for use and initialize the connection to the Moneris Go device.
@@ -57,6 +61,8 @@ client.on("error", (error) => {
 
 });
 ```
+
+***
 
 <br />
 
