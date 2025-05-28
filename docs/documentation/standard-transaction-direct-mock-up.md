@@ -62,6 +62,8 @@ client.on("error", (error) => {
 });
 ```
 
+<br />
+
 ***
 
 <br />
@@ -92,6 +94,10 @@ const orderId = uuidv4();
    },
  };
 ```
+
+<br />
+
+***
 
 <br />
 
@@ -141,6 +147,10 @@ Once a message has been processed, it needs to be removed from the buffer.
 
 buffer = buffer.subarray(messageLength + 2);
 ```
+
+<br />
+
+***
 
 <br />
 
@@ -206,6 +216,10 @@ if (disconnectResponse) {
      client.destroy();
 }
 ```
+
+<br />
+
+***
 
 <br />
 
