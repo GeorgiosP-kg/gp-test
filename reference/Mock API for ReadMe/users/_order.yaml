@@ -1,0 +1,5 @@
+- get_users
+- post_users
+- get_users-userid
+- put_users-userid
+- delete_users-userid
