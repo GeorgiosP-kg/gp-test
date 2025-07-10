@@ -1,0 +1,333 @@
+{
+"openapi": "3.0.0",
+"info": {
+"title": "Gizmo API",
+"description": "A simple demonstration API for managing \"Gizmo\" objects.\nThis API is used as an example for readme.com documentation.\nIt allows you to perform basic CRUD (Create, Read, Update, Delete) operations on gizmos.\n",
+"version": "1.0.0",
+"contact": {
+"name": "API Support",
+"url": "https://www.example.com/support",
+"email": "support@example.com"
+},
+"license": {
+"name": "Apache 2.0",
+"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+}
+},
+"servers": [
+{
+"url": "https://api.example.com/v1",
+"description": "Production Server"
+},
+{
+"url": "https://sandbox-api.example.com/v1",
+"description": "Sandbox for Testing"
+}
+],
+"paths": {
+"/gizmos": {
+"get": {
+"summary": "List all Gizmos",
+"description": "Returns a list of all gizmos in the system.",
+"tags": [
+"Gizmos"
+],
+"operationId": "listGizmos",
+"parameters": [
+{
+"name": "limit",
+"in": "query",
+"description": "How many items to return at one time (max 100)",
+"required": false,
+"schema": {
+"type": "integer",
+"maximum": 100,
+"format": "int32"
+}
+}
+],
+"responses": {
+"200": {
+"description": "A JSON array of gizmos",
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Gizmo"
+}
+}
+}
+}
+},
+"default": {
+"description": "Unexpected error",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Error"
+}
+}
+}
+}
+}
+},
+"post": {
+"summary": "Create a new Gizmo",
+"description": "Creates a new gizmo object.",
+"tags": [
+"Gizmos"
+],
+"operationId": "createGizmo",
+"requestBody": {
+"description": "The gizmo to create.",
+"required": true,
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/NewGizmo"
+}
+}
+}
+},
+"responses": {
+"201": {
+"description": "Gizmo created successfully",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Gizmo"
+}
+}
+}
+},
+"400": {
+"description": "Invalid input",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Error"
+}
+}
+}
+}
+}
+}
+},
+"/gizmos/{gizmoId}": {
+"get": {
+"summary": "Find Gizmo by ID",
+"description": "Returns a single gizmo based on its unique ID.",
+"tags": [
+"Gizmos"
+],
+"operationId": "getGizmoById",
+"parameters": [
+{
+"name": "gizmoId",
+"in": "path",
+"description": "ID of the gizmo to return",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Successful operation",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Gizmo"
+}
+}
+}
+},
+"404": {
+"description": "Gizmo not found",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Error"
+}
+}
+}
+},
+"default": {
+"description": "Unexpected error",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Error"
+}
+}
+}
+}
+}
+},
+"put": {
+"summary": "Update an existing Gizmo",
+"description": "Updates the properties of an existing gizmo.",
+"tags": [
+"Gizmos"
+],
+"operationId": "updateGizmo",
+"parameters": [
+{
+"name": "gizmoId",
+"in": "path",
+"description": "ID of the gizmo to update",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+}
+],
+"requestBody": {
+"description": "The updated gizmo object.",
+"required": true,
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/NewGizmo"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Gizmo updated successfully",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Gizmo"
+}
+}
+}
+},
+"404": {
+"description": "Gizmo not found",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Error"
+}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "Deletes a Gizmo",
+"description": "Deletes a gizmo from the system by its ID.",
+"tags": [
+"Gizmos"
+],
+"operationId": "deleteGizmo",
+"parameters": [
+{
+"name": "gizmoId",
+"in": "path",
+"description": "ID of the gizmo to delete",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+}
+],
+"responses": {
+"204": {
+"description": "Gizmo deleted successfully"
+},
+"404": {
+"description": "Gizmo not found",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Error"
+}
+}
+}
+}
+}
+}
+}
+},
+"components": {
+"schemas": {
+"Gizmo": {
+"type": "object",
+"required": [
+"id",
+"name",
+"createdAt"
+],
+"properties": {
+"id": {
+"type": "string",
+"format": "uuid",
+"description": "Unique identifier for the gizmo.",
+"example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+},
+"name": {
+"type": "string",
+"description": "The name of the gizmo.",
+"example": "My Awesome Gizmo"
+},
+"description": {
+"type": "string",
+"description": "A brief description of the gizmo.",
+"example": "It does amazing things!"
+},
+"createdAt": {
+"type": "string",
+"format": "date-time",
+"description": "The date and time the gizmo was created.",
+"readOnly": true,
+"example": "2023-07-25T10:43:12Z"
+}
+}
+},
+"NewGizmo": {
+"type": "object",
+"required": [
+"name"
+],
+"properties": {
+"name": {
+"type": "string",
+"description": "The name of the gizmo.",
+"example": "My Awesome Gizmo"
+},
+"description": {
+"type": "string",
+"description": "A brief description of the gizmo.",
+"example": "It does amazing things!"
+}
+}
+},
+"Error": {
+"type": "object",
+"required": [
+"code",
+"message"
+],
+"properties": {
+"code": {
+"type": "integer",
+"format": "int32",
+"description": "The error code."
+},
+"message": {
+"type": "string",
+"description": "A human-readable error message."
+}
+}
+}
+}
+}
+}
