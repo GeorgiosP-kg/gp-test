@@ -10,7 +10,7 @@ metadata:
 ---
 ## 1. Initialize the Purchase Endpoint
 
-Initialize the purchase endpoint, grab the **totalAmount** from the request body. Testing
+Initialize the purchase endpoint, grab the **totalAmount** from the request body.
 
 ```javascript
 app.post("/purchase", (req, res) => {
